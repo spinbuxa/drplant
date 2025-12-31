@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { BottomNav } from './components/BottomNav';
 import { WeatherWidget } from './components/WeatherWidget';
-import { Hero } from './components/Hero';
 import { ImageUpload } from './components/ImageUpload';
 import { AnalysisResults } from './components/AnalysisResults';
 import { HistoryList } from './components/HistoryList';
 import { analyzePlantImage } from './services/geminiService';
 import { PlantAnalysisResult } from './types';
-import { Loader2, Leaf, AlertTriangle, Users, BookOpen } from 'lucide-react';
+import { Loader2, AlertTriangle, Users, BookOpen, Calculator, Sprout, Bug, ChevronRight } from 'lucide-react';
 
 const STORAGE_KEY = 'drplant_history_v1';
 const THEME_KEY = 'drplant_theme';
@@ -21,7 +20,6 @@ const App: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [history, setHistory] = useState<PlantAnalysisResult[]>([]);
   
-  // Theme State
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem(THEME_KEY);
@@ -33,7 +31,6 @@ const App: React.FC = () => {
     return false;
   });
 
-  // Apply Theme Effect
   useEffect(() => {
     const root = window.document.documentElement;
     if (isDarkMode) {
@@ -49,7 +46,6 @@ const App: React.FC = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  // Load history on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -63,7 +59,7 @@ const App: React.FC = () => {
 
   const saveToHistory = (result: PlantAnalysisResult) => {
     const newResult = { ...result, imageUrl: selectedImage || undefined };
-    const updatedHistory = [newResult, ...history].slice(0, 10); // Keep last 10
+    const updatedHistory = [newResult, ...history].slice(0, 10);
     setHistory(updatedHistory);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedHistory));
   };
@@ -94,9 +90,8 @@ const App: React.FC = () => {
     setIsLoading(true);
     setError(null);
     setAnalysis(null);
-    setActiveTab('home'); // Ensure we are on home view
+    setActiveTab('home');
     
-    // Scroll to analysis section
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     try {
@@ -127,16 +122,15 @@ const App: React.FC = () => {
   };
 
   const triggerCamera = () => {
-    // Logic to trigger file input click is handled by ref in ImageUpload usually, 
-    // but for now we just scroll to the uploader and highlight it, or reset state to show uploader.
     handleReset();
     setActiveTab('home');
     setTimeout(() => {
         const uploadElement = document.getElementById('image-upload-area');
         if(uploadElement) {
             uploadElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            uploadElement.classList.add('ring-4', 'ring-green-400');
-            setTimeout(() => uploadElement.classList.remove('ring-4', 'ring-green-400'), 1000);
+            // Highlight effect
+            uploadElement.classList.add('ring-4', 'ring-green-400', 'transition-all');
+            setTimeout(() => uploadElement.classList.remove('ring-4', 'ring-green-400'), 1500);
         }
     }, 100);
   };
@@ -146,27 +140,41 @@ const App: React.FC = () => {
   const renderContent = () => {
     if (activeTab === 'community') {
       return (
-        <div className="space-y-6 animate-fade-in py-6">
-           <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-             <Users size={48} className="mx-auto text-green-500 mb-4" />
-             <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Comunidade de Produtores</h2>
-             <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xs mx-auto">Conecte-se com outros agricultores e especialistas para trocar experiências.</p>
-             <button className="mt-6 px-6 py-2 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors">
-               Entrar no Fórum
+        <div className="space-y-6 animate-fade-in py-4">
+           <div className="text-center py-10 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+             <div className="bg-green-100 dark:bg-green-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+               <Users size={32} className="text-green-600 dark:text-green-400" />
+             </div>
+             <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Comunidade Dr Plant</h2>
+             <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xs mx-auto text-sm">
+               Tire dúvidas, compartilhe fotos da sua colheita e aprenda com especialistas.
+             </p>
+             <button className="mt-6 px-8 py-2.5 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors text-sm shadow-md shadow-green-200 dark:shadow-none">
+               Participar da Conversa
              </button>
            </div>
            
-           <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200 px-2">Destaques Recentes</h3>
+           <div className="flex items-center justify-between px-1">
+             <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200">Discussões Populares</h3>
+             <span className="text-green-600 dark:text-green-400 text-xs font-semibold">Ver tudo</span>
+           </div>
+
            {[1, 2, 3].map(i => (
-             <div key={i} className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-               <div className="flex gap-3 mb-2">
-                 <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-600"></div>
+             <div key={i} className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+               <div className="flex gap-3 mb-3">
+                 <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 flex-shrink-0"></div>
                  <div>
-                   <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">Produtor Rural {i}</p>
-                   <p className="text-xs text-slate-400">Há 2 horas</p>
+                   <p className="font-semibold text-sm text-slate-800 dark:text-slate-200">João Agricultor</p>
+                   <p className="text-xs text-slate-400">Tomate • Há 2 horas</p>
                  </div>
                </div>
-               <p className="text-slate-600 dark:text-slate-300 text-sm">Alguém sabe identificar essa mancha nas folhas do tomateiro? Apareceu depois da chuva.</p>
+               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                 Minhas folhas de tomate estão amarelando nas bordas. Já apliquei cálcio mas não resolveu. Alguém já viu isso?
+               </p>
+               <div className="mt-3 flex gap-4 text-xs text-slate-400">
+                  <span className="flex items-center gap-1"><Users size={12}/> 5 respostas</span>
+                  <span className="flex items-center gap-1">👁️ 124 views</span>
+               </div>
              </div>
            ))}
         </div>
@@ -179,56 +187,95 @@ const App: React.FC = () => {
            <div className="bg-slate-100 dark:bg-slate-800 p-6 rounded-full mb-4">
              {activeTab === 'library' ? <BookOpen size={40} className="text-slate-400" /> : <Users size={40} className="text-slate-400" />}
            </div>
-           <h2 className="text-xl font-bold text-slate-700 dark:text-slate-300">Em Breve</h2>
-           <p className="text-slate-500 dark:text-slate-400 mt-2">Esta funcionalidade estará disponível na próxima atualização.</p>
+           <h2 className="text-xl font-bold text-slate-700 dark:text-slate-300">Em Desenvolvimento</h2>
+           <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xs mx-auto text-sm">Estamos preparando conteúdos exclusivos para você cultivar melhor.</p>
         </div>
       );
     }
 
     // Default: Home Tab
     return (
-      <div className="animate-fade-in">
+      <div className="animate-fade-in space-y-6">
         {!selectedImage ? (
           <>
-            <WeatherWidget />
+            {/* Header / Weather Section */}
+            <div className="relative">
+               <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 px-1">Olá, Produtor 👋</h1>
+               <WeatherWidget />
+            </div>
             
-            <div id="image-upload-area" className="scroll-mt-24">
-               <div className="mb-6 flex items-center justify-between">
-                 <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Diagnóstico de Saúde</h2>
-               </div>
-               <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 text-center mb-8">
-                  <div className="bg-green-50 dark:bg-green-900/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Leaf size={32} className="text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-slate-100">Sua colheita está saudável?</h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-6 text-sm">Tire uma foto para detectar doenças, pragas ou deficiências nutricionais instantaneamente.</p>
+            {/* Main Action Card */}
+            <div id="image-upload-area" className="scroll-mt-24 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
+               <div className="flex flex-col items-center text-center">
+                  <h3 className="font-bold text-lg text-slate-800 dark:text-slate-100 mb-2">
+                    Cure sua plantação
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 max-w-xs">
+                    Tire uma foto para detectar doenças, pragas e deficiências nutricionais em segundos.
+                  </p>
                   <ImageUpload onImageSelected={handleImageSelected} />
                </div>
             </div>
+
+            {/* Quick Actions Grid (Plantix Style) */}
+            <div className="grid grid-cols-2 gap-3">
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                    <Calculator size={20} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Calculadora de<br/>Fertilizantes</span>
+               </div>
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <Bug size={20} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Biblioteca de<br/>Pragas</span>
+               </div>
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                    <Sprout size={20} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Dicas de<br/>Cultivo</span>
+               </div>
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400">
+                    <Users size={20} />
+                  </div>
+                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Fórum de<br/>Especialistas</span>
+               </div>
+            </div>
             
-            <HistoryList items={history} onSelect={handleHistorySelect} onDelete={removeFromHistory} />
+            {history.length > 0 && (
+               <div className="pt-2">
+                 <HistoryList items={history} onSelect={handleHistorySelect} onDelete={removeFromHistory} />
+               </div>
+            )}
           </>
         ) : (
-          <div>
+          <div className="animate-fade-in">
             <button 
               onClick={handleReset}
-              className="mb-6 text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 flex items-center gap-2 transition-colors font-medium bg-white dark:bg-slate-800 px-4 py-2 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700"
+              className="mb-4 text-slate-500 dark:text-slate-400 hover:text-green-600 dark:hover:text-green-400 flex items-center gap-2 transition-colors font-medium text-sm"
             >
-              ← Voltar para início
+              <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
+                ←
+              </div>
+              Voltar para início
             </button>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div className="relative bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden group transition-colors">
+            <div className="grid md:grid-cols-2 gap-6 items-start">
+              <div className="relative bg-white dark:bg-slate-800 p-2 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden group transition-colors">
                 <img 
                   src={selectedImage} 
                   alt="Planta analisada" 
-                  className="w-full h-auto rounded-xl object-cover max-h-[500px]" 
+                  className="w-full h-auto rounded-xl object-cover max-h-[400px]" 
                 />
                 
                 {isLoading && (
-                  <div className="absolute inset-4 rounded-xl overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-green-400 shadow-[0_0_15px_rgba(74,222,128,0.8)] animate-[scan_2s_linear_infinite]"></div>
-                    <div className="absolute inset-0 bg-green-500/10 animate-pulse"></div>
+                  <div className="absolute inset-2 rounded-xl overflow-hidden pointer-events-none z-10">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-green-400 shadow-[0_0_20px_rgba(74,222,128,1)] animate-[scan_2s_linear_infinite]"></div>
+                    <div className="absolute inset-0 bg-green-900/20 animate-pulse"></div>
                   </div>
                 )}
                 <style>{`
@@ -243,24 +290,26 @@ const App: React.FC = () => {
 
               <div>
                 {isLoading && (
-                  <div className="h-full min-h-[400px] flex flex-col items-center justify-center bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 text-center animate-pulse transition-colors">
-                    <Loader2 className="animate-spin text-green-600 dark:text-green-400 mb-4" size={48} />
-                    <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Analisando sua planta...</h3>
-                    <p className="text-slate-500 dark:text-slate-400 mt-2 mb-6">Nossa IA está examinando sintomas visuais, folhas e padrões.</p>
-                    <div className="flex gap-2 text-xs text-slate-400 dark:text-slate-500 justify-center">
-                      <span className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">Fitopatologia</span>
-                      <span className="bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">Entomologia</span>
+                  <div className="h-full min-h-[400px] flex flex-col items-center justify-center bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 text-center animate-pulse">
+                    <Loader2 className="animate-spin text-green-600 dark:text-green-400 mb-6" size={56} />
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">Diagnosticando...</h3>
+                    <p className="text-slate-500 dark:text-slate-400 mt-2 mb-8 text-sm max-w-xs mx-auto">
+                      Nossa IA está analisando padrões nas folhas e identificando possíveis patógenos.
+                    </p>
+                    <div className="flex gap-2 text-[10px] text-slate-400 font-mono uppercase tracking-wider">
+                      <span>Analisando Textura</span> • <span>Identificando Cores</span>
                     </div>
                   </div>
                 )}
 
                 {error && !isLoading && (
                   <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
-                    <AlertTriangle className="mx-auto text-red-500 mb-2" size={32} />
-                    <p className="text-red-600 dark:text-red-300 font-medium mb-4">{error}</p>
+                    <AlertTriangle className="mx-auto text-red-500 mb-3" size={40} />
+                    <h3 className="font-bold text-red-700 dark:text-red-200 mb-2">Falha na Análise</h3>
+                    <p className="text-red-600 dark:text-red-300 text-sm mb-6">{error}</p>
                     <button 
                       onClick={() => handleImageSelected(selectedImage)}
-                      className="px-6 py-2 bg-red-100 dark:bg-red-800/50 text-red-700 dark:text-red-200 rounded-full hover:bg-red-200 dark:hover:bg-red-800 transition-colors font-medium"
+                      className="px-6 py-2.5 bg-white border border-red-200 text-red-700 rounded-full hover:bg-red-50 transition-colors font-medium text-sm shadow-sm"
                     >
                       Tentar Novamente
                     </button>
@@ -284,10 +333,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-20">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-24">
       <Navbar onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       
-      <main className="flex-grow container mx-auto px-4 py-6 max-w-2xl">
+      <main className="flex-grow container mx-auto px-4 py-4 max-w-2xl">
         {renderContent()}
       </main>
 
