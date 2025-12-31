@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { SiteHeader } from './components/SiteHeader';
-import { FooterNav } from './components/FooterNav';
+// IMPORTANTE: Usando novos nomes de arquivo para contornar cache do Git
+import { HeaderLayout } from './components/HeaderLayout';
+import { BottomMenu } from './components/BottomMenu';
 import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
 import { AnalysisResults } from './components/AnalysisResults';
@@ -338,4 +339,23 @@ export const App: React.FC = () => {
     );
   };
 
-  export default App;
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20 transition-colors duration-300">
+      <HeaderLayout 
+        onReset={handleReset} 
+        isDarkMode={isDarkMode} 
+        toggleTheme={toggleTheme} 
+      />
+
+      <main className="container mx-auto px-4 py-6 max-w-lg">
+        {renderContent()}
+      </main>
+
+      <BottomMenu 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab}
+        onCameraClick={triggerCamera} 
+      />
+    </div>
+  );
+};
