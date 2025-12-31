@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
+import { TopBar } from './components/TopBar';
 import { BottomNav } from './components/BottomNav';
 import { WeatherWidget } from './components/WeatherWidget';
 import { ImageUpload } from './components/ImageUpload';
@@ -7,7 +7,7 @@ import { AnalysisResults } from './components/AnalysisResults';
 import { HistoryList } from './components/HistoryList';
 import { analyzePlantImage } from './services/geminiService';
 import { PlantAnalysisResult } from './types';
-import { Loader2, AlertTriangle, Users, BookOpen, Calculator, Sprout, Bug, ChevronRight } from 'lucide-react';
+import { Loader2, AlertTriangle, Users, BookOpen, Calculator, Sprout, Bug } from 'lucide-react';
 
 const STORAGE_KEY = 'drplant_history_v1';
 const THEME_KEY = 'drplant_theme';
@@ -204,7 +204,7 @@ const App: React.FC = () => {
                <WeatherWidget />
             </div>
             
-            {/* Main Action Card */}
+            {/* Main Action Card - Plantix "Heal your crop" style */}
             <div id="image-upload-area" className="scroll-mt-24 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700 relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
                <div className="flex flex-col items-center text-center">
@@ -334,7 +334,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-24">
-      <Navbar onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <TopBar onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       
       <main className="flex-grow container mx-auto px-4 py-4 max-w-2xl">
         {renderContent()}
