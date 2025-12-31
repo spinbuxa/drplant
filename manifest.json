@@ -1,0 +1,21 @@
+{
+  "name": "Dr Plant",
+  "short_name": "Dr Plant",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#16a34a",
+  "description": "Diagnóstico de plantas e hortaliças com IA.",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628283.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

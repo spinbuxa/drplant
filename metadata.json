@@ -1,0 +1,7 @@
+{
+  "name": "Dr Plant",
+  "description": "Seu assistente virtual para diagnóstico de saúde de plantas e hortaliças. Identifique doenças, pragas e deficiências nutricionais instantaneamente com IA.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
