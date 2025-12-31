@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SiteHeader } from './components/SiteHeader';
-import { BottomNav } from './components/BottomNav';
+import { FooterNav } from './components/FooterNav';
 import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
 import { AnalysisResults } from './components/AnalysisResults';
@@ -352,7 +352,7 @@ const App: React.FC = () => {
         {renderContent()}
       </main>
 
-      <BottomNav 
+      <FooterNav 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
         onCameraClick={triggerCamera} 
