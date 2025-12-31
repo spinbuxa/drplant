@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { BottomNav } from './components/BottomNav';
-import { WeatherWidget } from './components/WeatherWidget';
+import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
 import { AnalysisResults } from './components/AnalysisResults';
 import { HistoryList } from './components/HistoryList';
@@ -189,6 +189,12 @@ const App: React.FC = () => {
            </div>
            <h2 className="text-xl font-bold text-slate-700 dark:text-slate-300">Em Desenvolvimento</h2>
            <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xs mx-auto text-sm">Estamos preparando conteúdos exclusivos para você cultivar melhor.</p>
+           {activeTab === 'profile' && (
+             <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700 w-full max-w-xs">
+                <p className="text-xs text-slate-400 font-medium uppercase tracking-wider mb-2">Desenvolvedor</p>
+                <p className="font-bold text-slate-700 dark:text-slate-200">Daniel Possamai Vieira</p>
+             </div>
+           )}
         </div>
       );
     }
@@ -201,7 +207,7 @@ const App: React.FC = () => {
             {/* Header / Weather Section */}
             <div className="relative">
                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 px-1">Olá, Produtor 👋</h1>
-               <WeatherWidget />
+               <PlantWeather />
             </div>
             
             {/* Main Action Card - Plantix "Heal your crop" style */}
@@ -251,6 +257,12 @@ const App: React.FC = () => {
                  <HistoryList items={history} onSelect={handleHistorySelect} onDelete={removeFromHistory} />
                </div>
             )}
+            
+            {/* Developer Credit Footer */}
+            <div className="py-6 text-center">
+              <p className="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-600 font-semibold mb-1">Desenvolvido por</p>
+              <p className="text-xs font-bold text-slate-600 dark:text-slate-400">Daniel Possamai Vieira</p>
+            </div>
           </>
         ) : (
           <div className="animate-fade-in">
