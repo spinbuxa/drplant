@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppNavbar } from './components/AppNavbar';
+import { Navigation } from './components/Navigation';
 import { BottomNav } from './components/BottomNav';
 import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
@@ -346,7 +346,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-24">
-      <AppNavbar onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <Navigation onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       
       <main className="flex-grow container mx-auto px-4 py-4 max-w-2xl">
         {renderContent()}
