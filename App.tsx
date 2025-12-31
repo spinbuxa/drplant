@@ -220,27 +220,27 @@ const App: React.FC = () => {
 
             {/* Quick Actions Grid (Plantix Style) */}
             <div className="grid grid-cols-2 gap-3">
-               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
-                    <Calculator size={20} />
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+                  <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+                    <Calculator size={24} />
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Calculadora de<br/>Fertilizantes</span>
                </div>
-               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                    <Bug size={20} />
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                    <Bug size={24} />
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Biblioteca de<br/>Pragas</span>
                </div>
-               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
-                    <Sprout size={20} />
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+                  <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
+                    <Sprout size={24} />
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Dicas de<br/>Cultivo</span>
                </div>
-               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
-                  <div className="w-10 h-10 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400">
-                    <Users size={20} />
+               <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
+                  <div className="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center text-teal-600 dark:text-teal-400 group-hover:scale-110 transition-transform">
+                    <Users size={24} />
                   </div>
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Fórum de<br/>Especialistas</span>
                </div>
