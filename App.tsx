@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// Usando SiteHeader para evitar conflitos de cache/git casing com Navbar
 import { SiteHeader } from './components/SiteHeader';
-// Usando FooterNav para evitar conflitos de cache/git casing com BottomNav
 import { FooterNav } from './components/FooterNav';
 import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
@@ -130,7 +128,6 @@ export const App: React.FC = () => {
         const uploadElement = document.getElementById('image-upload-area');
         if(uploadElement) {
             uploadElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // Highlight effect
             uploadElement.classList.add('ring-4', 'ring-green-400', 'transition-all');
             setTimeout(() => uploadElement.classList.remove('ring-4', 'ring-green-400'), 1500);
         }
@@ -201,18 +198,15 @@ export const App: React.FC = () => {
       );
     }
 
-    // Default: Home Tab
     return (
       <div className="animate-fade-in space-y-6">
         {!selectedImage ? (
           <>
-            {/* Header / Weather Section */}
             <div className="relative">
                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 px-1">Olá, Produtor 👋</h1>
                <PlantWeather />
             </div>
             
-            {/* Main Action Card - Plantix "Heal your crop" style */}
             <div id="image-upload-area" className="scroll-mt-24 bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-md border border-slate-100 dark:border-slate-700 relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
                <div className="flex flex-col items-center text-center">
@@ -226,7 +220,6 @@ export const App: React.FC = () => {
                </div>
             </div>
 
-            {/* Quick Actions Grid (Plantix Style) */}
             <div className="grid grid-cols-2 gap-3">
                <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer group">
                   <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
@@ -260,7 +253,6 @@ export const App: React.FC = () => {
                </div>
             )}
             
-            {/* Developer Credit Footer */}
             <div className="py-6 text-center">
               <p className="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-600 font-semibold mb-1">Desenvolvido por</p>
               <p className="text-xs font-bold text-slate-600 dark:text-slate-400">Daniel Possamai Vieira</p>
@@ -346,23 +338,4 @@ export const App: React.FC = () => {
     );
   };
 
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-20 font-sans text-slate-900 dark:text-slate-100">
-      <SiteHeader 
-        onReset={handleReset} 
-        isDarkMode={isDarkMode} 
-        toggleTheme={toggleTheme} 
-      />
-      
-      <main className="container mx-auto px-4 pt-6 pb-24 max-w-5xl">
-        {renderContent()}
-      </main>
-
-      <FooterNav 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab}
-        onCameraClick={triggerCamera} 
-      />
-    </div>
-  );
-};
+  export default App;
