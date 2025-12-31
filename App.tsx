@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// Usando SiteHeader para evitar conflitos de cache/git casing com Navbar
 import { SiteHeader } from './components/SiteHeader';
+// Usando FooterNav para evitar conflitos de cache/git casing com BottomNav
 import { FooterNav } from './components/FooterNav';
 import { PlantWeather } from './components/PlantWeather';
 import { ImageUpload } from './components/ImageUpload';
@@ -12,7 +14,7 @@ import { Loader2, AlertTriangle, Users, BookOpen, Calculator, Sprout, Bug } from
 const STORAGE_KEY = 'drplant_history_v1';
 const THEME_KEY = 'drplant_theme';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [analysis, setAnalysis] = useState<PlantAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -345,20 +347,22 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-24">
-      <SiteHeader onReset={handleReset} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 pb-20 font-sans text-slate-900 dark:text-slate-100">
+      <SiteHeader 
+        onReset={handleReset} 
+        isDarkMode={isDarkMode} 
+        toggleTheme={toggleTheme} 
+      />
       
-      <main className="flex-grow container mx-auto px-4 py-4 max-w-2xl">
+      <main className="container mx-auto px-4 pt-6 pb-24 max-w-5xl">
         {renderContent()}
       </main>
 
       <FooterNav 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={setActiveTab}
         onCameraClick={triggerCamera} 
       />
     </div>
   );
 };
-
-export default App;
